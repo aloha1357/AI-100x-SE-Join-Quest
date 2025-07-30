@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="runner.CucumberTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-07-30T10:06:53.763Z" hostname="DESKTOP-09KVEE3" time="0.042">
+<testsuite name="runner.CucumberTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-07-30T10:18:48.729Z" hostname="DESKTOP-09KVEE3" time="0.056">
   <properties/>
-  <testcase name="Dummy walking skeleton scenario" classname="runner.CucumberTest" time="0.042"/>
+  <testcase name="Buy 12 pairs of socks at 100 each" classname="runner.CucumberTest" time="0.056"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
