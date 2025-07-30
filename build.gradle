@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+group 'com.ai100x'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -10,39 +10,12 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
-    testImplementation 'io.cucumber:cucumber-java:7.15.0'
-    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.15.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'io.cucumber:cucumber-java:7.14.0'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.14.0'
     testImplementation 'org.junit.platform:junit-platform-suite:1.10.2'
 }
 
 test {
     useJUnitPlatform()
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-tasks.register('printJavaVersion') {
-    doLast {
-        javaexec {
-            main = '-version'
-            classpath = sourceSets.main.get().runtimeClasspath
-        }
-    }
-}
-
-tasks.register('printGradleVersion') {
-    doLast {
-        exec {
-            commandLine 'gradle', '-v'
-        }
-    }
 }
