@@ -7,6 +7,42 @@ import io.cucumber.java.en.And;
 import java.util.*;
 
 public class OrderStepDefinitions {
+
+    private boolean bogoCosmeticsActive = false;
+
+    @Given("the buy one get one promotion for cosmetics is active")
+    public void the_buy_one_get_one_promotion_for_cosmetics_is_active() {
+        bogoCosmeticsActive = true;
+        // 若已設定 threshold/discount，則用有參建構子
+        if (threshold > 0 && discount > 0) {
+            orderService = new OrderService(threshold, discount);
+        } else {
+            orderService = new OrderService();
+        }
+    }
+
+    @When("a customer places an order with:")
+    public void a_customer_places_an_order_with(io.cucumber.datatable.DataTable dataTable) {
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        orderItems = new ArrayList<>();
+        boolean hasCategory = rows.get(0).containsKey("category");
+        originalAmount = 0;
+        for (Map<String, String> row : rows) {
+            String productName = row.get("productName");
+            int quantity = Integer.parseInt(row.get("quantity"));
+            int unitPrice = Integer.parseInt(row.get("unitPrice"));
+            String category = hasCategory ? row.get("category") : null;
+            orderItems.add(new OrderItem(productName, category, quantity, unitPrice));
+            originalAmount += quantity * unitPrice;
+        }
+        if (bogoCosmeticsActive) {
+            orderResult = orderService.placeOrderWithBogo(orderItems, true);
+        } else {
+            orderResult = orderService.placeOrder(orderItems);
+        }
+    }
+
+
     private int threshold;
     private int discount;
     private OrderService orderService;
@@ -27,20 +63,6 @@ public class OrderStepDefinitions {
         orderService = new OrderService(threshold, discount);
     }
 
-    @When("a customer places an order with:")
-    public void a_customer_places_an_order_with(io.cucumber.datatable.DataTable dataTable) {
-        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-        orderItems = new ArrayList<>();
-        originalAmount = 0;
-        for (Map<String, String> row : rows) {
-            String productName = row.get("productName");
-            int quantity = Integer.parseInt(row.get("quantity"));
-            int unitPrice = Integer.parseInt(row.get("unitPrice"));
-            orderItems.add(new OrderItem(productName, quantity, unitPrice));
-            originalAmount += quantity * unitPrice;
-        }
-        orderResult = orderService.placeOrder(orderItems);
-    }
 
     @Then("the order summary should be:")
     public void the_order_summary_should_be(io.cucumber.datatable.DataTable dataTable) {

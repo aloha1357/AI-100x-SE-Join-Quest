@@ -1,2 +1,24 @@
 AI-100x-SE-Official-main.zip
 /AI-100x-SE-Official-main
+
+# Java/Gradle
+/build/
+/out/
+*.class
+*.log
+*.tmp
+*.bak
+.gradle/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Others
+*.swp
+*.swo

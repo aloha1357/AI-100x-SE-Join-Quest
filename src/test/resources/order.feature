@@ -32,4 +32,59 @@ Feature: E-commerce Order Pricing Promotions
       | T-shirt     | 2        |
       | 褲子          | 1        |
 
-# 其他 scenario 先註解，僅保留 scenario 1 和 2 以便 BDD 單步開發
+  Scenario: Buy-one-get-one for cosmetics - multiple products
+    Given the buy one get one promotion for cosmetics is active
+    When a customer places an order with:
+      | productName | category  | quantity | unitPrice |
+      | 口紅          | cosmetics | 1        | 300       |
+      | 粉底液         | cosmetics | 1        | 400       |
+    Then the order summary should be:
+      | totalAmount |
+      | 700         |
+    And the customer should receive:
+      | productName | quantity |
+      | 口紅          | 2        |
+      | 粉底液         | 2        |
+
+  Scenario: Buy-one-get-one for cosmetics - same product twice
+    Given the buy one get one promotion for cosmetics is active
+    When a customer places an order with:
+      | productName | category  | quantity | unitPrice |
+      | 口紅          | cosmetics | 2        | 300       |
+    Then the order summary should be:
+      | totalAmount |
+      | 600         |
+    And the customer should receive:
+      | productName | quantity |
+      | 口紅          | 3        |
+
+  Scenario: Buy-one-get-one for cosmetics - mixed categories
+    Given the buy one get one promotion for cosmetics is active
+    When a customer places an order with:
+      | productName | category  | quantity | unitPrice |
+      | 襪子          | apparel   | 1        | 100       |
+      | 口紅          | cosmetics | 1        | 300       |
+    Then the order summary should be:
+      | totalAmount |
+      | 400         |
+    And the customer should receive:
+      | productName | quantity |
+      | 襪子          | 1        |
+      | 口紅          | 2        |
+
+  Scenario: Multiple promotions stacked
+    Given the threshold discount promotion is configured:
+      | threshold | discount |
+      | 1000      | 100      |
+    And the buy one get one promotion for cosmetics is active
+    When a customer places an order with:
+      | productName | category  | quantity | unitPrice |
+      | T-shirt     | apparel   | 3        | 500       |
+      | 口紅          | cosmetics | 1        | 300       |
+    Then the order summary should be:
+      | originalAmount | discount | totalAmount |
+      | 1800           | 100      | 1700        |
+    And the customer should receive:
+      | productName | quantity |
+      | T-shirt     | 3        |
+      | 口紅          | 2        |

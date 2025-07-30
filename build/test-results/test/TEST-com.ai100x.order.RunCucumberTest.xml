@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ai100x.order.RunCucumberTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-07-30T11:20:29.583Z" hostname="DESKTOP-09KVEE3" time="0.054">
+<testsuite name="com.ai100x.order.RunCucumberTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-07-30T12:40:29.935Z" hostname="DESKTOP-09KVEE3" time="0.064">
   <properties/>
-  <testcase name="Single product without promotions" classname="com.ai100x.order.RunCucumberTest" time="0.051"/>
+  <testcase name="Single product without promotions" classname="com.ai100x.order.RunCucumberTest" time="0.054"/>
   <testcase name="Threshold discount applies when subtotal reaches 1000" classname="com.ai100x.order.RunCucumberTest" time="0.002"/>
+  <testcase name="Buy-one-get-one for cosmetics - multiple products" classname="com.ai100x.order.RunCucumberTest" time="0.002"/>
+  <testcase name="Buy-one-get-one for cosmetics - same product twice" classname="com.ai100x.order.RunCucumberTest" time="0.002"/>
+  <testcase name="Buy-one-get-one for cosmetics - mixed categories" classname="com.ai100x.order.RunCucumberTest" time="0.001"/>
+  <testcase name="Multiple promotions stacked" classname="com.ai100x.order.RunCucumberTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
