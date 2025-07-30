@@ -16,4 +16,20 @@ Feature: E-commerce Order Pricing Promotions
       | productName | quantity |
       | T-shirt     | 1        |
 
-# 其他 scenario 先註解，僅保留第一個 scenario 以便 walking skeleton 測試
+  Scenario: Threshold discount applies when subtotal reaches 1000
+    Given the threshold discount promotion is configured:
+      | threshold | discount |
+      | 1000      | 100      |
+    When a customer places an order with:
+      | productName | quantity | unitPrice |
+      | T-shirt     | 2        | 500       |
+      | 褲子          | 1        | 600       |
+    Then the order summary should be:
+      | originalAmount | discount | totalAmount |
+      | 1600           | 100      | 1500        |
+    And the customer should receive:
+      | productName | quantity |
+      | T-shirt     | 2        |
+      | 褲子          | 1        |
+
+# 其他 scenario 先註解，僅保留 scenario 1 和 2 以便 BDD 單步開發

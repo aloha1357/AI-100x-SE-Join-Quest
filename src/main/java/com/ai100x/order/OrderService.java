@@ -3,13 +3,24 @@ package com.ai100x.order;
 import java.util.*;
 
 public class OrderService {
+    private int threshold;
+    private int discount;
+
+    public OrderService() {
+        this.threshold = 0;
+        this.discount = 0;
+    }
+    public OrderService(int threshold, int discount) {
+        this.threshold = threshold;
+        this.discount = discount;
+    }
     public OrderResult placeOrder(List<OrderItem> items) {
-        int totalAmount = 0;
-        List<OrderItem> received = new ArrayList<>();
+        int originalAmount = 0;
         for (OrderItem item : items) {
-            totalAmount += item.getUnitPrice() * item.getQuantity();
-            received.add(new OrderItem(item.getProductName(), item.getQuantity(), item.getUnitPrice()));
+            originalAmount += item.getUnitPrice() * item.getQuantity();
         }
-        return new OrderResult(totalAmount, received);
+        int appliedDiscount = (threshold > 0 && originalAmount >= threshold) ? discount : 0;
+        int totalAmount = originalAmount - appliedDiscount;
+        return new OrderResult(originalAmount, appliedDiscount, totalAmount, items);
     }
 }
